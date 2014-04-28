@@ -30,6 +30,11 @@ module Exercises
   #  - Returns the sum of the given array of numbers
   def self.ex3(array)
     # TODO
+    sum = 0
+    for i in 0...array.length
+      sum += array[i]
+    end
+      sum
   end
 
   # Exercise 4
