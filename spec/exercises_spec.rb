@@ -33,3 +33,38 @@ describe 'Exercise 3' do
     expect(result).to eq(11)
   end
 end
+
+describe 'Exercise 4' do
+  it "returns the max number of a given array of numbers" do
+    result = Exercises.ex4([3,1,5,2])
+    expect(result).to eq(5)
+  end
+end
+
+describe 'Exercise 5' do
+  it "should iterate through an array and puts each number" do
+  STDOUT.should_receive(:puts).with(10)
+  Exercises.ex5([10])
+  end
+end
+
+describe 'Exercise 6' do
+  it "should update the last item in the array to 'panda'" do
+    result = Exercises.ex6(["monkey", "tree", "bamboo"])
+    expect(result).to eq(["monkey", "tree", "bamboo", "panda"])
+  end
+
+  it "should update the last item to 'GODZILLA' if the last element is already 'panda'" do
+    result = Exercises.ex6(["monkey", "panda"])
+    expect(result).to eq(["monkey", "panda", "GODZILLA"])
+  end
+end
+
+describe 'Exercise 7' do
+  it "should add str to the end of the array if it exists in the array" do
+    result = Exercises.ex7(["monkey", "banana", "tree"], "monkey")
+    expect(result).to eq(["monkey", "banana", "tree", "monkey"])
+
+  end
+end
+
