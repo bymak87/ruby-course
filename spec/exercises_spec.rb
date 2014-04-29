@@ -68,3 +68,18 @@ describe 'Exercise 7' do
   end
 end
 
+describe 'Exercise 8' do
+  it " iiterates through an array and prints name and occupation" do
+    STDOUT.should_receive(:puts).with("bob: builder")
+    STDOUT.should_receive(:puts).with("thomas: train")
+    result = Exercises.ex8([{:name=>"bob", :occupation=> "builder"}, {:name=>"thomas", :occupation=> "train"}])
+
+  end
+end
+
+describe 'Exercise 9' do
+  it "returns true if a given time is a leap year, otherwise false" do
+    result = Exercises.ex9(2008)
+    expect(result).to eq(true)
+  end
+end
