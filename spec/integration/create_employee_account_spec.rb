@@ -2,17 +2,22 @@ require 'spec_helper'
 
 describe 'Creating an Employee Account' do
 
+  before (:each) do
+    @signin1 = DoubleDog::SignIn.new
+    @account1 = DoubleDog::CreateAccount.new
+  end
+
   it "can create an employee account" do
     # Given that I have an admin account
     admin = DoubleDog.db.create_user(:username => 'alice', :password => '123', :admin => true)
 
     # And I am signed in
-    signin_result = DoubleDog::SignIn.new.run(:username => 'alice', :password => '123')
+    signin_result = @signin1.run(:username => 'alice', :password => '123')
     expect(signin_result[:success?]).to eq true
     session_id = signin_result[:session_id]
 
     # When I create an employee account for Bob
-    create_result = DoubleDog::CreateAccount.new.run(
+    create_result = @account1.run(
       :session_id => session_id,
       :username => 'bob',
       :password => 'xyz'

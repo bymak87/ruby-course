@@ -1,11 +1,19 @@
 require 'spec_helper'
 
 describe DoubleDog::CreateAccount do
+  let(:use_case) do
+    uc = DoubleDog::CreateAccount.new
+    expect(uc).to receive(:admin_session?).and_return(@auth_admin)
+    uc
+  end
+
+  before(:each) do
+    @auth_admin = true
+  end
 
   describe 'Validation' do
     it "requires the creator to be an admin" do
-      use_case = DoubleDog::CreateAccount.new
-      expect(use_case).to receive(:admin_session?).and_return(false)
+      @auth_admin = false
 
       result = use_case.run(:session_id => 'nope', :username => 'a', :password => 'b')
       expect(result[:success?]).to eq false
@@ -13,8 +21,6 @@ describe DoubleDog::CreateAccount do
     end
 
     it "requires a username" do
-      use_case = DoubleDog::CreateAccount.new
-      expect(use_case).to receive(:admin_session?).and_return(true)
 
       result = use_case.run(:session_id => 0, :password => 'bluh')
       expect(result[:success?]).to eq false
@@ -22,8 +28,6 @@ describe DoubleDog::CreateAccount do
     end
 
     it "requires a username to be at least three characters" do
-      use_case = DoubleDog::CreateAccount.new
-      expect(use_case).to receive(:admin_session?).and_return(true)
 
       result = use_case.run(:session_id => 0, :username => 'ab', :password => 'bluh')
       expect(result[:success?]).to eq false
@@ -31,8 +35,6 @@ describe DoubleDog::CreateAccount do
     end
 
     it "requires a password" do
-      use_case = DoubleDog::CreateAccount.new
-      expect(use_case).to receive(:admin_session?).and_return(true)
 
       result = use_case.run(:session_id => 0, :username => 'bob')
       expect(result[:success?]).to eq false
@@ -40,8 +42,6 @@ describe DoubleDog::CreateAccount do
     end
 
     it "requires a password with at least three characters" do
-      use_case = DoubleDog::CreateAccount.new
-      expect(use_case).to receive(:admin_session?).and_return(true)
 
       result = use_case.run(:session_id => 0, :username => 'bob', :password => '12')
       expect(result[:success?]).to eq false
@@ -50,8 +50,6 @@ describe DoubleDog::CreateAccount do
   end
 
   it "creates an account" do
-    use_case = DoubleDog::CreateAccount.new
-    expect(use_case).to receive(:admin_session?).and_return(true)
 
     result = use_case.run(:session_id => 0, :username => 'bob', :password => 'letmein')
     expect(result[:success?]).to eq true
